@@ -1,0 +1,106 @@
+@if (errorMessage) {
+
+<div class="mb-4 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700 shadow-sm">
+    <div class="flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
+        <span class="text-sm font-medium">
+            {{ errorMessage }}
+        </span>
+    </div>
+
+</div>
+
+}
+
+<form [formGroup]="loginForm" (ngSubmit)="OnSubmit()">
+
+    <div class="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4 font-sans overflow-hidden">
+        <div class="container max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+
+            <div class="w-full lg:w-1/2 space-y-6">
+                <div>
+                    <h1 class="text-[#00358e] text-6xl font-extrabold tracking-tight mb-4">Posts</h1>
+                    <p class="text-[24px] text-gray-800 leading-tight font-medium max-w-md">
+                        Welcome back! Log in to see what your friends have been up to.
+                    </p>
+                </div>
+
+                <div class="bg-white/70 border border-blue-200 rounded-3xl p-8 shadow-sm max-w-lg">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Missed anything?</h3>
+                    <p class="text-[14px] text-gray-600 leading-relaxed">
+                        Check your latest notifications, messages, and trending posts in your community.
+                    </p>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-100">
+                <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-50">
+
+                    <div class="flex bg-[#f0f2f5] p-1 rounded-xl mb-6">
+                        <button
+                            class="w-1/2 py-2 text-sm font-bold text-[#00358e] bg-white rounded-lg shadow-sm">Login</button>
+                        <a routerLink="/auth/register"
+                            class="w-1/2 py-2 text-sm font-bold text-gray-600 hover:text-gray-800 transition text-center">Register</a>
+                    </div>
+
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-[#1c1e21]">Sign In</h2>
+                        <p class="text-xs text-gray-500 mt-1">Enter your details to stay connected.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="group relative">
+                            <i
+                                class="fa-regular fa-envelope absolute left-4 top-4 text-gray-400 text-sm group-focus-within:text-[#00358e]"></i>
+                            <input type="email" placeholder="Email or Username" formControlName="email"
+                                class="w-full pl-11 pr-4 py-4 bg-[#f5f7f9] border-none rounded-2xl focus:ring-2 focus:ring-[#00358e] transition-all text-sm outline-none" />
+                        </div>
+
+                        <div class="group relative">
+                            <i class="fa-solid fa-lock absolute left-4 top-4 text-gray-400 text-sm group-focus-within:text-[#00358e]"></i>
+
+                            <input [type]="isShowPassword ? 'text' : 'password'" placeholder="Password" formControlName="password"
+                                class="w-full pl-11 pr-4 py-4 bg-[#f5f7f9] border-none rounded-2xl focus:ring-2 focus:ring-[#00358e] transition-all text-sm outline-none" />
+
+                            <i (click)="togglePassword()" class="fa-solid fa-eye cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#00358e]"></i>
+
+                        </div>
+
+                        <div class="flex justify-end px-1">
+                            <a routerLink="/auth/forgot-password" class="text-xs text-[#00358e] font-semibold hover:underline">Forgot
+                                password?</a>
+
+                        </div>
+
+                        <button type="submit" [disabled]="loginForm.invalid ||isLoading"
+                            class="cursor-pointer disabled:bg-gray-400 md:col-span-2 w-full bg-[#002d7d] hover:bg-[#001f5a] text-white py-3.5 rounded-xl font-bold text-base shadow-lg transition-all transform active:scale-[0.98] mt-2">
+
+                            @if(isLoading){
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            } @else {
+                            Log In
+                            }
+
+                        </button>
+
+                    </div>
+
+                    <div class="relative my-8 text-center">
+                        <hr class="border-gray-100">
+                        <span
+                            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-xs text-gray-400">OR</span>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-sm text-gray-500">
+                            Don't have an account?
+                            <a routerLink="/auth/register" class="text-[#00358e] font-bold hover:underline ml-1">Join
+                                Posts</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

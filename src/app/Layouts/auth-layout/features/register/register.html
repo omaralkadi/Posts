@@ -1,0 +1,194 @@
+@if (errorMessage) {
+
+<div class="mb-4 rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700 shadow-sm">
+    <div class="flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation text-red-400"></i>
+        <span class="text-sm font-medium">
+            {{ errorMessage }}
+        </span>
+    </div>
+
+</div>
+
+}
+
+<form (ngSubmit)="OnSubmit()" [formGroup]="registerForm">
+
+    <div class="min-h-screen bg-[#f0f2f5] flex items-center justify-center p-4 font-sans overflow-hidden">
+        <div class="container max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+
+            <div class="w-full lg:w-1/2 space-y-4">
+                <div>
+                    <h1 class="text-[#00358e] text-5xl font-extrabold tracking-tight mb-2">Posts</h1>
+                    <p class="text-[20px] text-gray-800 leading-tight max-w-md font-medium">
+                        Connect with friends and the world around you on Posts.
+                    </p>
+                </div>
+
+                <div class="bg-white/70 border border-blue-200 rounded-[24px] p-6 shadow-sm max-w-lg">
+                    <span class="text-[10px] font-bold text-[#00358e] tracking-widest uppercase italic">Why join
+                        us?</span>
+                    <h3 class="text-xl font-bold text-gray-900 mt-1 mb-2">Share Your Moments</h3>
+                    <p class="text-[13px] text-gray-600 leading-relaxed mb-4">
+                        Posts is a vibrant community where your ideas matter. Share high-quality content and build
+                        meaningful relationships.
+                    </p>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-[#edf3ff] p-3 rounded-xl border border-blue-100">
+                            <div class="text-[#00358e] font-bold text-lg">100%</div>
+                            <div class="text-[9px] uppercase text-gray-500 font-bold tracking-wider">Privacy</div>
+                        </div>
+                        <div class="bg-[#edf3ff] p-3 rounded-xl border border-blue-100">
+                            <div class="text-[#00358e] font-bold text-lg">5M+</div>
+                            <div class="text-[9px] uppercase text-gray-500 font-bold tracking-wider">Daily Posts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-[500px]">
+                <div class="bg-white rounded-3xl shadow-2xl p-6 border border-gray-50">
+
+                    <div class="flex bg-[#f0f2f5] p-1 rounded-xl mb-4">
+                        <a routerLink="/auth/login" routerLinkActive="bg-white text-[#00358e] shadow-sm"
+                            class="w-1/2 py-1.5 text-xs font-bold text-gray-600 transition text-center rounded-lg">
+                            Login
+                        </a>
+
+                        <a routerLink="/auth/register" routerLinkActive="bg-white text-[#00358e] shadow-sm"
+                            class="w-1/2 py-1.5 text-xs font-bold text-gray-600 transition text-center rounded-lg bg-white text-[#00358e] shadow-sm">
+                            Register
+                        </a>
+                    </div>
+
+                    <div class="mb-4 text-center lg:text-left">
+                        <h2 class="text-2xl font-bold text-[#1c1e21]">Create account</h2>
+                        <p class="text-xs text-gray-500">Quick and easy.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-regular fa-user absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <input type="text" placeholder="Full name" formControlName="name"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm transition-all" />
+                        </div>
+                        @if(registerForm.get('name')?.errors && (registerForm.get('name')?.touched)){
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-0.5"></i>
+                            <p>Full Name is required (2-20 characters) with No Spaces.</p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <span class="absolute left-4 top-3 text-gray-400 font-semibold text-sm">@</span>
+                            <input type="text" placeholder="Username" formControlName="username"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm transition-all" />
+                        </div>
+                        @if(registerForm.get('username')?.errors && (registerForm.get('username')?.touched)){
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-0.5"></i>
+                            <p>Username is required (2-20 characters) with No Spaces.</p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-regular fa-envelope absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <input type="email" placeholder="Email" formControlName="email"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm transition-all" />
+                        </div>
+                        @if(registerForm.get('email')?.errors && (registerForm.get('email')?.touched)){
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-0.5"></i>
+                            <p>Please enter a valid email address.</p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-solid fa-venus-mars absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <select formControlName="gender"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm text-gray-400 appearance-none">
+                                <option value="" disabled selected>Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        @if(registerForm.get('gender')?.errors && (registerForm.get('gender')?.touched)){
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-0.5"></i>
+                            <p>Gender selection is required.</p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-regular fa-calendar absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <input type="date" formControlName="dateOfBirth"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm text-gray-400" />
+                        </div>
+                        @if(registerForm.get('dateOfBirth')?.errors && (registerForm.get('dateOfBirth')?.touched)){
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-0.5"></i>
+                            <p>Date of birth is required.</p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-solid fa-lock absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <input #passwordInput type="password" placeholder="Password" formControlName="password"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm transition-all" />
+                            <i (click)="togglePassword(passwordInput)" class="fa-solid fa-eye cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#00358e]"></i>
+
+                        </div>
+                        @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched) {
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-1"></i>
+                            <p>
+                                <span class="font-bold">Invalid Password:</span> Capital, 2-9 small letters, symbol (@,
+                                _, -) & 3-9 digits.
+                                <span class="text-gray-500 font-bold block mt-0.5">(e.g., Ahmed@123)</span>
+                            </p>
+                        </div>
+                        }
+
+                        <div class="group relative md:col-span-2">
+                            <i class="fa-solid fa-lock absolute left-4 top-3.5 text-gray-400 text-sm"></i>
+                            <input #rePasswordInput type="password" placeholder="Confirm Password" formControlName="rePassword" type="password"
+                                class="w-full pl-10 pr-4 py-3 bg-[#f5f7f9] border-none rounded-xl focus:ring-2 focus:ring-[#00358e] text-sm transition-all" />
+                            <i (click)="togglePassword(rePasswordInput)" class="fa-solid fa-eye cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#00358e]"></i>
+
+
+                            </div>
+                        @if(registerForm.get('rePassword')?.errors?.["passwordMismatch"] &&
+                        registerForm.get('rePassword')?.touched) {
+                        <div class="flex items-start text-[11px] leading-tight text-red-600 md:col-span-2 px-2"
+                            role="alert">
+                            <i class="fa-solid fa-triangle-exclamation me-2 mt-1"></i>
+                            <p>Passwords must match.</p>
+                        </div>
+                        }
+
+                        <button type="submit" [disabled]="registerForm.invalid ||isLoading"
+                            class="cursor-pointer disabled:bg-gray-400 md:col-span-2 w-full bg-[#002d7d] hover:bg-[#001f5a] text-white py-3.5 rounded-xl font-bold text-base shadow-lg transition-all transform active:scale-[0.98] mt-2">
+
+                            @if(isLoading){
+                            <i class="fa-solid fa-spinner fa-spin"></i>
+                            } @else {
+                            Create New Account
+                            }
+
+
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
