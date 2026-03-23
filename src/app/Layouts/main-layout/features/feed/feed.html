@@ -1,5 +1,29 @@
-<div class="w-full lg:w-[90%] mx-auto mt-8 lg:mt-5 mt-20 p-4 lg:p-20 grid lg:grid-cols-12 gap-4">
-    <div class="lg:col-start-1 lg:col-end-4 bg-green-400">1</div>
-    <div class="lg:col-start-4 lg:col-end-10 bg-blue-400">2</div>
-    <div class="lg:col-start-10 lg:col-end-13 bg-yellow-400">3</div>
+<div class="relative">
+    <!-- Loader -->
+    @if (isLoading) {
+        <div class="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+            <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    }
+
+    <!-- الصفحة -->
+    <div class="w-full lg:w-[100%] mx-auto mt-8 lg:mt-5 mt-20 p-4 lg:p-20 grid lg:grid-cols-12 gap-4 bg-gray-50">
+
+        
+        <div class="lg:col-start-1 lg:col-end-3">1</div>
+
+        <div class="lg:col-start-3 lg:col-end-10">
+            
+           <app-create-post></app-create-post>
+           
+            @for (post of allPosts; track post._id) {
+                <a [routerLink]="['/main/details', post._id]">
+                    <app-post [post]="post"></app-post>
+                </a>
+            }
+
+        </div>
+
+        <div class="lg:col-start-10 lg:col-end-13">3</div>
+    </div>
 </div>

@@ -11,6 +11,7 @@ import { NotFound } from './Layouts/features/not-found/not-found';
 import { Feed } from './Layouts/main-layout/features/feed/feed';
 import { guestGuard } from './core/guards/GuestGuard/guest-guard';
 import { authGuard } from './core/guards/AuthGuard/auth-guard';
+import { PostDetails } from './Layouts/main-layout/features/post-details/post-details';
 
 export const routes: Routes = [
 
@@ -35,7 +36,8 @@ export const routes: Routes = [
       { path: 'feed', component: Feed },
       { path: 'profile', component: Profile },
       { path: 'notifications', component: Notification },
-      { path: 'changepassword', component: ChangePassword }
+      { path: 'changepassword', component: ChangePassword },
+      { path: 'details/:id', component: PostDetails }
     ]
   },
 

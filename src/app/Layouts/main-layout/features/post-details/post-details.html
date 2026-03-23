@@ -1,0 +1,17 @@
+<div class="relative">
+
+    <!-- Loader -->
+    @if (isLoading) {
+        <div class="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+            <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    }
+
+    <!-- Content -->
+    @if (!isLoading && Post) {
+        <div class="mt-20 max-w-3xl mx-auto">
+            <app-post [post]="Post"></app-post>
+        </div>
+    }
+
+</div>

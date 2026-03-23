@@ -12,12 +12,12 @@ export class AuthService {
 
      Register(data:Object):Observable<any>
       {
-        return this.http.post(`${environment.baseUrl}users/signup`,data);
+        return this.http.post(`${environment.baseUrl}/users/signup`,data);
       }
 
       Login(data:Object):Observable<any>
       {
-        return this.http.post(`${environment.baseUrl}users/signin`,data);
+        return this.http.post(`${environment.baseUrl}/users/signin`,data);
       }
 
 }
