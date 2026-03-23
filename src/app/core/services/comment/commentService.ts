@@ -12,22 +12,14 @@ export class commentService {
   private readonly userToken: any= `Bearer ${localStorage.getItem('token')}`;
 
 
-  getComments(postId: string):Observable<any>
+  getComments(postId: string, page: number):Observable<any>
   {
-    return this.http.get(`${environment.baseUrl}/posts/${postId}/comments?page=1&limit=5`, {
-      headers: {
-        Authorization: this.userToken
-      }
-    })
+    return this.http.get(`${environment.baseUrl}/posts/${postId}/comments?page=${page}&limit=5`)
   }
 
   createComment(postId: string, commentData: any):Observable<any>
   {
-    return this.http.post(`${environment.baseUrl}/posts/${postId}/comments`, commentData, {
-      headers: {
-        Authorization: this.userToken
-      }
-    })
+    return this.http.post(`${environment.baseUrl}/posts/${postId}/comments`, commentData)
   }
   
 }

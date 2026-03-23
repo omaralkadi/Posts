@@ -23,9 +23,13 @@
 
     </div>
 
-    <!-- 📝 Post text -->
-    <div class="mt-4 text-sm text-gray-800 leading-relaxed">
-        {{post.body}}
+<!-- 📝 Post text -->
+    <div 
+    class="mt-4 text-sm text-gray-800 leading-relaxed cursor-pointer"
+    [routerLink]="['/main/details', post._id]">
+
+        {{ post.body }}
+
     </div>
 
     <!-- 🖼️ Post image -->

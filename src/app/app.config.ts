@@ -3,12 +3,14 @@ import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angu
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { headerInterceptor } from './core/Interceptors/header/header-interceptor';
+import { errorInterceptor } from './core/Interceptors/Error/error-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes,withViewTransitions({skipInitialTransition: true}),withInMemoryScrolling({scrollPositionRestoration:'enabled'})), provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(),withInterceptors([headerInterceptor,errorInterceptor])),
   ]
 };

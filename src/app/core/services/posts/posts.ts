@@ -13,32 +13,19 @@ export class Posts {
 
   getAllPosts(page: number): Observable<any> {
     
-    const headers = new HttpHeaders({
-      authorization: this.userToken
-    });
-
     return this.http.get(`${environment.baseUrl}/posts`, {
-      headers,
       params: { page }
     });
   }
 
   CreatePost(postData: any):Observable<any> 
   {
-    return this.http.post(`${environment.baseUrl}/posts`, postData, {
-      headers: {
-        authorization: this.userToken
-      }
-    });
+    return this.http.post(`${environment.baseUrl}/posts`, postData);
   } 
 
   getSinglePost(PostId: any):Observable<any> 
   {
-    return this.http.get(`${environment.baseUrl}/posts/${PostId}`, {
-      headers: {
-        authorization: this.userToken
-      }
-    });
+    return this.http.get(`${environment.baseUrl}/posts/${PostId}`);
   } 
   
 }

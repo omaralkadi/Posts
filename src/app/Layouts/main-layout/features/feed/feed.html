@@ -17,9 +17,7 @@
            <app-create-post></app-create-post>
            
             @for (post of allPosts; track post._id) {
-                <a [routerLink]="['/main/details', post._id]">
-                    <app-post [post]="post"></app-post>
-                </a>
+               <app-post [post]="post"></app-post>
             }
 
         </div>
@@ -27,3 +25,9 @@
         <div class="lg:col-start-10 lg:col-end-13">3</div>
     </div>
 </div>
+
+@if (isLoadingMore) {
+  <div class="flex justify-center py-4">
+    <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+}

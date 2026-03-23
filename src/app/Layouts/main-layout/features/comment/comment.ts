@@ -16,21 +16,55 @@ export class Comment {
 
   isSubmitting:boolean = false;
 
+  currentPage: number = 1;
+  hasMore: boolean = true;
+  isLoadingMore: boolean = false;
+
   private readonly commentService:commentService=inject(commentService);
   commentList: IComment[] = [];
 
-  ngOnInit(): void {
-    this.commentService.getComments(this.PostId).subscribe({
-      next: (response) => {
-        this.commentList = response.data.comments;
-      },
-      error: (error) => {
-        console.error('Error fetching comments for post', this.PostId, ':', error);
+ngOnInit(): void {
+  this.loadComments();
+}
+
+loadComments() {
+
+  if (!this.hasMore || this.isLoadingMore) return;
+
+  this.isLoadingMore = true;
+
+  this.commentService.getComments(this.PostId, this.currentPage).subscribe({
+
+    next: (response) => {
+
+      const newComments = response.data.comments;
+
+      // 🔥 ضيف على القديم
+      this.commentList = [
+        ...this.commentList,
+        ...newComments
+      ];
+
+      // 🧠 pagination
+      if (!response.pagination?.nextPage && newComments.length < 5) {
+        this.hasMore = false;
+      } else {
+        this.currentPage++;
       }
-    });
 
+    },
 
-  }
+    error: (error) => {
+      console.error(error);
+      this.isLoadingMore = false;
+    },
+
+    complete: () => {
+      this.isLoadingMore = false;
+    }
+
+  });
+}
 
    commentForm:FormGroup=new FormGroup({
     'comment':new FormControl(null,[Validators.required]),
