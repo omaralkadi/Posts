@@ -9,7 +9,7 @@ const router = inject(Router);
 const platform = inject(Platform);
 
 if (!platform.checkBrowserPlatform()) {
-  return router.createUrlTree(['/auth/login']);
+  return true;
 }
 
 const token = localStorage.getItem('token');

@@ -1,4 +1,4 @@
-import { Component, inject, Input, input } from '@angular/core';
+import { Component, ElementRef, inject, Input, input, ViewChild, viewChild } from '@angular/core';
 import { commentService } from '../../../../core/services/comment/commentService';
 import { IComment } from '../../../../core/services/models/Comments/icomment';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,6 +12,15 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class Comment {
 
   @Input({required:true}) PostId!: string;
+  @ViewChild('CommnentInput') commentInput!: ElementRef<HTMLInputElement>;
+
+  focusOnComment() {
+
+    setTimeout(() => {
+      this.commentInput.nativeElement.focus();
+    });
+  }
+
   errorMessage: string = '';
 
   isSubmitting:boolean = false;

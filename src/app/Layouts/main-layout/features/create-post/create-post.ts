@@ -5,6 +5,8 @@ import { initFlowbite } from 'flowbite';
 import { Posts } from '../../../../core/services/posts/posts';
 import Swal from 'sweetalert2';
 import { PostsSharedService } from '../../../../shared/components/services/Posts/posts-shared-service';
+import { Platform } from '../../../../core/services/platform/platform';
+import { User } from '../../../../core/services/models/posts/iposts';
 
 @Component({
   selector: 'app-create-post',
@@ -16,6 +18,10 @@ export class CreatePost {
 
   private readonly PostsService:Posts=inject(Posts);
   private shared = inject(PostsSharedService);
+  private platform = inject(Platform);  
+
+  UserData:User | null=null;
+  currentUser:User | null=null;
 
   isLoading:boolean=false;
 
@@ -24,6 +30,8 @@ export class CreatePost {
       this.flowbiteService.loadFlowbite((flowbite) => {
         initFlowbite();
       });
+
+      this.DisplayUserDate();
     }
 
     postContent = '';
@@ -43,61 +51,71 @@ export class CreatePost {
       }
     }
 
-submitPost() {
+    submitPost() {
 
-  if (!this.postContent && !this.selectedFile) return;
+      if (!this.postContent && !this.selectedFile) return;
 
-    this.isLoading = true;
+        this.isLoading = true;
 
-    let postForm = new FormData();
+        let postForm = new FormData();
 
-    if (this.postContent) {
-      postForm.append("body", this.postContent);
-    }
+        if (this.postContent) {
+          postForm.append("body", this.postContent);
+        }
 
-    if (this.selectedFile) {
-      postForm.append("image", this.selectedFile);
-    }
+        if (this.selectedFile) {
+          postForm.append("image", this.selectedFile);
+        }
 
-  this.PostsService.CreatePost(postForm).subscribe({
+      this.PostsService.CreatePost(postForm).subscribe({
 
-  next: (response) => {
-    const currentUser = JSON.parse(localStorage.getItem('userData')!);
+      next: (response) => {
+        if(this.platform.checkBrowserPlatform())
+        {
+          this.currentUser = JSON.parse(localStorage.getItem('userData')!);
+        }
+        const newPost = 
+        {
+          ...response.data.post,
+          user:this.currentUser
+        };
+        
+        this.shared.addPost(newPost); 
 
-    const newPost = 
-    {
-      ...response.data.post,
-      user:currentUser
-    };
-    
-    this.shared.addPost(newPost);
+        this.postContent = '';
+        this.imagePreview = null;
 
-    this.postContent = '';
-    this.imagePreview = null;
+        (document.querySelector('[data-modal-hide="postModal"]') as HTMLElement)?.click();
 
-    (document.querySelector('[data-modal-hide="postModal"]') as HTMLElement)?.click();
+        Swal.fire({
+          icon: 'success',
+          title: 'Done!',
+          text: 'Post created successfully',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      },
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Done!',
-      text: 'Post created successfully',
-      timer: 2000,
-      showConfirmButton: false
-    });
-  },
+        error: (error) => {
+          this.isLoading = false;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to create post'
+          });
+        },
 
-    error: (error) => {
-      this.isLoading = false;
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to create post'
+        complete: () => {
+          this.isLoading = false;
+        }
       });
-    },
-
-    complete: () => {
-      this.isLoading = false;
     }
-  });
-}
+
+    DisplayUserDate(){
+      if (this.platform.checkBrowserPlatform()) {
+          const data = localStorage.getItem('userData');
+          if (data) 
+            this.UserData = JSON.parse(data);
+        }
+    } 
 }

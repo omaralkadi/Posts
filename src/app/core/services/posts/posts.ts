@@ -9,13 +9,18 @@ import { environment } from '../../../../environments/environment';
 export class Posts {
 
   private readonly http: HttpClient= inject(HttpClient);
-  private readonly userToken: any= `Bearer ${localStorage.getItem('token')}`;
+  
+  // private readonly userToken: any= `Bearer ${localStorage.getItem('token')}`;
 
   getAllPosts(page: number): Observable<any> {
     
     return this.http.get(`${environment.baseUrl}/posts`, {
       params: { page }
     });
+  }
+
+  deletePost(postId: string):Observable<any>{
+    return this.http.delete(`${environment.baseUrl}/posts/${postId}`);
   }
 
   CreatePost(postData: any):Observable<any> 
@@ -27,5 +32,17 @@ export class Posts {
   {
     return this.http.get(`${environment.baseUrl}/posts/${PostId}`);
   } 
+
+  likeAndUlikePost(postId: string):Observable<any>
+  {
+    return this.http.put(`${environment.baseUrl}/posts/${postId}/like`, {});
+  }
+
+  sharePost(postId: string):Observable<any>
+  {
+    return this.http.post(`${environment.baseUrl}/posts/${postId}/share`, {});
+  }
+
+
   
 }
