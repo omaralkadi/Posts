@@ -4,10 +4,12 @@ import { Follower } from '../../../../core/services/models/followers/follower';
 import { ToastrService } from 'ngx-toastr';
 import { FollowersSharedService } from '../../../../shared/followers/followers-shared-service';
 import { finalize } from 'rxjs';
+import { FollowersFilterPipe } from "../../../../core/Pips/followers-filter-pipe";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-followers',
-  imports: [],
+  imports: [FormsModule,FollowersFilterPipe],
   templateUrl: './followers.html',
   styleUrl: './followers.css',
 })
@@ -18,7 +20,7 @@ export class Followers implements OnInit {
   private readonly followersService = inject(FollowersSharedService);
 
   followersList: Follower[] = [];
-
+  searchWord: string = '';
   loadingFollowerIds = new Set<string>();
 
   ngOnInit(): void {
